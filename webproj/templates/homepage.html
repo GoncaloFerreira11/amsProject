@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h3>{{ message }}</h3>
+
+
+<style>
+.map{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: red;
+    color: white;
+    text-align: center;
+}
+</style>
+
+
+<div class id="map">
+     <iframe width="500" height="400" frameborder="10" src="https://www.bing.com/maps/embed?h=400&w=500&cp=39.9773804538841~-8.205051264387212&lvl=7&typ=d&sty=r&src=SHELL&FORM=MBEDV8" scrolling="no">
+     </iframe>
+
+</div>
+
+
+{% endblock %}

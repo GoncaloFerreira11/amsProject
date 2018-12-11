@@ -74,8 +74,13 @@ class WebApp(object):
         #user = self.get_user()
         db_json = json.load(open(WebApp.dbjson))
         users = db_json['users']
+        usr = usr.lower()
+        pwd = pwd.lower()
+
+        print (db_json)
         for u in users:
-            if u['username'] == usr and u['password'] == pwd:
+            if u['username'].lower() == usr and u['password'].lower() == pwd:
+                print ("FOUND USER")
                 self.set_user(usr)
                 break
 
@@ -128,17 +133,28 @@ class WebApp(object):
 
     @cherrypy.expose
     def login(self, username=None, password=None):
-        if username == None:
+        print("INPUT: " + str(username) + " - " + str(password))
+
+        if username == None or username.strip() == "" \
+            or password == None or password.strip() == "" :
+
+            print ("INPUT ERROR: ")
+
             tparams = {
                 'title': 'Login',
-                'errors': False,
+                'errors': True,
                 'user': self.get_user(),
-                'year': datetime.now().year,
+                'year': datetime.now().year
             }
+
             return self.render('login.html', tparams)
+            # return self.render('login.html')
+
         else:
+            print ("OK")
             self.do_authenticationJSON(username, password)
             #self.do_authenticationDB(username, password)
+            print (self.get_user())
             if not self.get_user()['is_authenticated']:
                 tparams = {
                     'title': 'Login',   
@@ -146,10 +162,11 @@ class WebApp(object):
                     'user': self.get_user(),
                     'year': datetime.now().year,
                 }
-                return self.render('login.html', tparams)
-            else:
-                raise cherrypy.HTTPRedirect("/")
 
+                return self.render('login.html', tparams)
+
+            else:
+                raise cherrypy.HTTPRedirect("/homepage")
 
     @cherrypy.expose
     def logout(self):
@@ -179,10 +196,22 @@ class WebApp(object):
                     'year': datetime.now().year,
                     'agree_term': True,
                 }
+
                 return self.render('signup.html', tparams)
+
             else:
                 self.do_authenticationJSON(username, password)
                 raise cherrypy.HTTPRedirect("/")
+
+    @cherrypy.expose
+    def homepage(self):
+        tparams = {
+            "message": "Explore asdsad",
+            "user": self.get_user(),
+            "year": datetime.now().year
+        }
+
+        return self.render('homepage.html', tparams)
 
 
     @cherrypy.expose

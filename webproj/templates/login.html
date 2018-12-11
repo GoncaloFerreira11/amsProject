@@ -5,7 +5,7 @@
 <h2>{{ title }}</h2>
 <div class="row">
     <div class="col-md-8">
-        <section id="loginForm">
+        <!-- <section id="loginForm">
             <form action="login" method="post" class="form-horizontal">
                 <h4>Use a local account to log in.</h4>
                 <hr />
@@ -30,7 +30,19 @@
                 <p class="validation-summary-errors">Please enter a correct user name and password.</p>
                 {% endif %}
             </form>
-        </section>
+        </section> -->
+        <form action="login" method="post">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input name="username" type="username" class="form-control" id="id_username" aria-describedby="username" placeholder="Enter username">
+                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input name="password" type="password" class="form-control" id="id_password" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm"></section>
